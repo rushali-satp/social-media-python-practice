@@ -1,19 +1,15 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
-from database import SessionLocal
+from database import get_db
 from models import User
 from schemas import UserResponse
-
+from user_API import router as user_router
 app = FastAPI(title="User API")
 
+app.include_router(user_router)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 
 @app.get("/")
